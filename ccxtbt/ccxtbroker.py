@@ -221,7 +221,7 @@ class CCXTBroker(with_metaclass(MetaCCXTBroker, BrokerBase)):
                 pos = self.getposition(o_order.data, clone=False)
                 pos.update(o_order.size, o_order.price)
                 o_order.completed()
-                self.notify(o_order)
+                # self.notify(o_order) # bug that appears to result in duplicate notify_order calls
                 self.open_orders.remove(o_order)
                 self.get_balance()
 
@@ -230,7 +230,7 @@ class CCXTBroker(with_metaclass(MetaCCXTBroker, BrokerBase)):
             if self.mappings['canceled_order']['key'] in ccxt_order and ccxt_order[self.mappings['canceled_order']['key']] == self.mappings['canceled_order']['value']:
                 self.open_orders.remove(o_order)
                 o_order.cancel()
-                self.notify(o_order)
+                # self.notify(o_order) # bug that appears to result in duplicate notify_order calls
 
     def _submit(self, owner, data, exectype, side, amount, price, params):
         if amount == 0 or price == 0:
