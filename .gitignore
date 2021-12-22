@@ -1,5 +1,7 @@
 # Secrets
-samples/params.json
+params.json
+/data/raw
+/data/clean
 .idea/
 
 # Byte-compiled / optimized / DLL files
@@ -30,6 +32,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.DS_STORE
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

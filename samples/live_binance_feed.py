@@ -82,7 +82,7 @@ class TestStrategy(bt.Strategy):
         self.order = None
 
 
-with open('./params.json', 'r') as f:
+with open('../params.json', 'r') as f:
     params = json.load(f)
 
 cerebro = bt.Cerebro(quicknotify=True)

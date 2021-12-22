@@ -10,4 +10,7 @@ Preferred IDE: Pycharm
 
 ### Project structure
 - **ccxtbt** backtrader and ccxt to allow for fetching historical prices and live trading for various crypto exchanges including Binance. 
-- **samples** miscellanous samples. copy sample_params.json to params.json and add secrets. 
+- **samples** miscellanous samples. copy sample_params.json to params.json and add secrets.
+
+### Data Download
+See README.md in /data for dataset download instructions

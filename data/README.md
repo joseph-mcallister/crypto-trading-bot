@@ -1,0 +1,1 @@
+Download and unzip Kraken dataset to data/raw/kraken: https://drive.google.com/file/d/1Y2LLx4fDyPrleYeCqgOZnIW01GlooBHq/view
