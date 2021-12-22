@@ -1,6 +1,8 @@
 import unittest
 import numpy as np
 import pandas as pd
+
+from data.data_utils import load_kraken_data
 from models import MLPClassifierV0
 from models.features import HourlySMA
 from .model_utils import moving_avg, moving_avg_diff, perc_change, binary_labels
@@ -49,10 +51,7 @@ class ModelUtils(unittest.TestCase):
 
     @staticmethod
     def test_smann_v0():
-        data_path = (Path(__file__).parent / "../data/raw/kraken/XBTUSD_1.csv").resolve()
-        df = pd.read_csv(data_path, names=["Date", "Open", "High", "Low", "Close", "Volume", "Trades"])
-        df['Date'] = pd.to_datetime(df['Date'], unit='s')
-        df = df.iloc[::60, :]
+        df = load_kraken_data("XBT", "USD", 60)
         model = MLPClassifierV0(df, HourlySMA, "test_1")
         period = HourlySMA.get_period()
         # x_(t-1) predicts y_t

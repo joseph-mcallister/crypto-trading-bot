@@ -67,4 +67,6 @@ class MLPClassifierV0(Model):
     def get_labels(self) -> pd.DataFrame:
         return binary_labels(self.df["Close"])[self.period:]
 
-
+# def XGBoostV0(Model):
+#
+#     def
