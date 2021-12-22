@@ -1,7 +1,8 @@
 import unittest
 import numpy as np
 import pandas as pd
-from models import SMANNHourlyV0, SMANNHourlyXGBoost
+from models import MLPClassifierV0
+from models.features import HourlySMA
 from .model_utils import moving_avg, moving_avg_diff, perc_change, binary_labels
 from pathlib import Path
 from sklearn import metrics
@@ -52,11 +53,12 @@ class ModelUtils(unittest.TestCase):
         df = pd.read_csv(data_path, names=["Date", "Open", "High", "Low", "Close", "Volume", "Trades"])
         df['Date'] = pd.to_datetime(df['Date'], unit='s')
         df = df.iloc[::60, :]
-        model = SMANNHourlyV0(df, "test_1")
+        model = MLPClassifierV0(df, HourlySMA, "test_1")
+        period = HourlySMA.get_period()
         # x_(t-1) predicts y_t
-        assert model.get_features().shape[0] == df[model.period:].shape[0]
+        assert HourlySMA.get_features(df).shape[0] == df[period:].shape[0]
         model.train()
-        assert len(model.x_train) + len(model.x_test) == df[model.period:].shape[0] - 2
+        assert len(model.x_train) + len(model.x_test) == df[period:].shape[0] - 2
         labels = model.get_labels()
         baseline = max(np.where(labels == 0)[0].shape[0], np.where(labels == 1)[0].shape[0]) / len(labels)
         print("Baseline Accuracy: ", baseline)
