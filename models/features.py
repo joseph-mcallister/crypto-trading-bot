@@ -5,25 +5,23 @@ import numpy as np
 
 from .model_utils import moving_avg, moving_avg_diff
 
+
 class FeatureStore(ABC):
 
-    @staticmethod
     @abstractmethod
-    def get_features(df: pd.DataFrame) -> np.ndarray:
+    def get_features(self, df: pd.DataFrame) -> np.ndarray:
         ...
 
-    @staticmethod
     @abstractmethod
-    def get_period() -> int:
+    def get_period(self) -> int:
         ...
 
 class HourlySMA(FeatureStore):
 
-    @staticmethod
-    def get_period():
+    def get_period(self):
         return 24 * 31
 
-    def get_features(df: pd.DataFrame) -> np.ndarray:
+    def get_features(self, df: pd.DataFrame) -> np.ndarray:
         moving_avg_1_hours = moving_avg(df["Close"], 1)
         moving_avg_2_hours = moving_avg(df["Close"], 2)
         moving_avg_3_hours = moving_avg(df["Close"], 3)
@@ -42,4 +40,4 @@ class HourlySMA(FeatureStore):
         mv_1w_1m = moving_avg_diff(moving_avg_1_week, moving_avg_1_month)
 
         x = np.stack((mv_1h_2h, mv_1h_3h, mv_3h_12h, mv_12h_24h, mv_24h_48h, mv_48h_1w, mv_1w_1m), axis=1)
-        return x[HourlySMA.get_period():]
+        return x[self.get_period():]

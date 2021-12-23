@@ -24,6 +24,16 @@ def perc_change(x: np.ndarray, shift=1) -> np.ndarray:
 def binary_labels(x: np.ndarray, shift=1) -> np.ndarray:
     tmp = perc_change(x, shift)
     labels = np.zeros(tmp.shape)
+    labels[tmp > 0] = 1
     labels[:shift] = np.nan
-    labels[np.where(tmp > 0)] = 1
+    return labels
+
+
+""" 0 if perc_change(x, shift) <= threshold, 2 if perc_change(x, shift) >= threshold, else 1"""
+def trinary_labels(x: np.ndarray, threshold, shift=1):
+    tmp = perc_change(x, shift)
+    labels = np.ones(tmp.shape)
+    labels[tmp >= threshold] = 2
+    labels[tmp <= -threshold] = 0
+    labels[:shift] = np.nan
     return labels
