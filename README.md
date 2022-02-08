@@ -1,7 +1,4 @@
-# fat-stacks
-
-### Setup
-Preferred IDE: Pycharm
+# crypto-trading-bot
 
 ### External libraries
 - [backtrader](https://www.backtrader.com/docu/)
